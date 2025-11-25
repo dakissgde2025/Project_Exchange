@@ -1,0 +1,73 @@
+@model Project_Exchange.Models.AppointmentPageViewModel
+@{
+    ViewData["Title"] = "Értékbecslési időpontok";
+}
+
+<div class="row g-4 my-3">
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-uppercase text-muted mb-1">Új időpont</p>
+                <h2 class="h4 fw-bold mb-4">Foglaljon konzultációt</h2>
+
+                <form asp-action="Create" method="post" novalidate>
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Form.AppointmentDateTime" class="form-label"></label>
+                        <input asp-for="Form.AppointmentDateTime" class="form-control form-control-lg" type="datetime-local" />
+                        <span asp-validation-for="Form.AppointmentDateTime" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Form.Note" class="form-label"></label>
+                        <textarea asp-for="Form.Note" class="form-control form-control-lg" rows="3"></textarea>
+                        <span asp-validation-for="Form.Note" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Időpont lefoglalása</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <p class="text-uppercase text-muted mb-1">Foglalásaim</p>
+                <h2 class="h4 fw-bold mb-3">Elkövetkező időpontok</h2>
+                @if (Model.UpcomingAppointments.Any())
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var appointment in Model.UpcomingAppointments)
+                        {
+                            <div class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="fw-semibold mb-1">@appointment.AppointmentDateTime.ToString("yyyy. MMMM dd. HH:mm")</p>
+                                        <p class="text-muted small mb-0">@appointment.Note</p>
+                                    </div>
+                                    <span class="badge bg-light text-dark">Leadva: @appointment.Created.ToString("yyyy. MMM dd.")</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <p class="text-muted mb-2">Még nincs aktív foglalása.</p>
+                        <p class="fw-semibold">Foglaljon időpontot a bal oldali űrlappal!</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

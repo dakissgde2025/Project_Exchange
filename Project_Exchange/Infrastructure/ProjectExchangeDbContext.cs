@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using BusinessLogic.Entities;
 
 namespace Infrastructure
@@ -10,9 +9,8 @@ namespace Infrastructure
         {
         }
 
-        // DbSet properties for entities
-        public DbSet<AppUser> Appuser { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<AppUser> AppUsers => Set<AppUser>();
+        public DbSet<Appointment> Appointments => Set<Appointment>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

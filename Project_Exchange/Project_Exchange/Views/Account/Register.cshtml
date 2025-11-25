@@ -1,0 +1,48 @@
+@model Project_Exchange.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Regisztráció";
+}
+
+<div class="auth-card mx-auto my-4 p-4 p-md-5 shadow-sm rounded-4">
+    <h1 class="h3 fw-bold mb-3 text-center">@ViewData["Title"]</h1>
+    <p class="text-muted text-center mb-4">Hozzon létre fiókot az időpontfoglaláshoz és értesítésekhez.</p>
+
+    <form asp-action="Register" method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control form-control-lg" autocomplete="email" />
+            <span asp-validation-for="Email" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="PhoneNumber" class="form-label"></label>
+            <input asp-for="PhoneNumber" class="form-control form-control-lg" autocomplete="tel" />
+            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-control form-control-lg" autocomplete="new-password" />
+            <span asp-validation-for="Password" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="ConfirmPassword" class="form-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control form-control-lg" autocomplete="new-password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+        </div>
+
+        <div class="d-grid mb-3">
+            <button type="submit" class="btn btn-primary btn-lg">Fiók létrehozása</button>
+        </div>
+        <p class="text-center text-muted mb-0">Már van fiókja? <a asp-action="Login">Jelentkezzen be</a>.</p>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
